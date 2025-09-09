@@ -92,6 +92,30 @@ class commentListResponse(BaseModel):
     pageInfo: Dict[str, int]
     items: list[commentThread]
 
+#Video models
+
+class videoStatistics(BaseModel):
+    viewCount: str
+    likeCount: Optional[str] = None
+    dislikeCount: Optional[str] = None
+    favoriteCount: str
+    commentCount: Optional[str] = None
+
+class video(BaseModel):
+    kind: str
+    etag: str
+    id: str
+    statistics: videoStatistics
+
+class pageInfo(BaseModel):
+    totalResults: int
+    resultsPerPage: int
+
+class videoListResponse(BaseModel):
+    kind: str
+    etag: str
+    pageInfo: pageInfo
+    items: list[video]
     
 
 

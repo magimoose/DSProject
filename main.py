@@ -1,5 +1,6 @@
-from api import search_videos, get_comments, get_comment_reply_dict
+from api import *
 from models import *
+from services import *
 
 def main():
     brand_name = "nike"
@@ -12,19 +13,13 @@ def main():
     for search_query in search_queries:
         videos = search_videos(search_query, max_results=video_count)
         videos = searchListResponse(**videos)
-        video_ids = [item.id.videoId for item in videos.items]
+        vid_df = video_to_dataframe(videos)
+
 
         print(f"Search query: {search_query}")
-        print(f"Video IDs: {video_ids}")
-
-        
+        print(vid_df.head())
         
 
-    # comments = get_comments("dQw4w9WgXcQ", max_results=50)
-    # # video = api.search_videos("Python programming", max_results=1)
-    # comments = models.commentListResponse(**comments)
-    # comment_reply_dict = get_comment_reply_dict(comments)
-    # print(comment_reply_dict)
 
 if __name__ == "__main__":
     main()

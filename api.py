@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import re
 from googleapiclient.discovery import build
-from models import commentListResponse, commentListResponse, comment
+from models import *
 
 dotenv.load_dotenv()
 
@@ -33,17 +33,10 @@ def get_comments(video_id, max_results=50):
     response = request.execute()
     return response
 
-def get_comment_reply_dict(comment_threads: commentListResponse):
-    comment_reply_dict = {}
-    for comment_thread in comment_threads.items:
-        top_level_comment = comment_thread.snippet.topLevelComment
-        comment_text = top_level_comment.snippet.textOriginal
-        replies = comment_thread.replies['comments'] if comment_thread.replies else []
-        reply_texts = []
-        for reply in replies:
-            reply_text = reply.snippet.textOriginal
-            reply_texts.append(reply_text)
-        comment_reply_dict[comment_text] = reply_texts
-    return comment_reply_dict
-
-
+def get_video_details(video_id):
+    request = youtube.videos().list(
+        part='statistics',
+        id=video_id
+    )
+    response = request.execute()
+    return response
